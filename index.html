@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pembayaran Makanan Online</title>
+    <style>
+      /* Styling untuk form */
+
+      body {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        background-position: center;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        background-color: green;
+        height: 90px;
+        text-align: center;
+        padding: 10px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      label {
+        margin-bottom: 10px;
+      }
+      input[type="text"], input[type="email"], input[type="tel"], select {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      /* Styling untuk hasil pembayaran */
+      #hasil-pembayaran {
+        display: none;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+      #hasil-pembayaran h2 {
+        margin-top: 0;
+      }
+      #hasil-pembayaran p {
+        margin-bottom: 10px;
+      }
+      #hasil-pembayaran button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+      #hasil-pembayaran button:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pembayaran Makanan Online</h1>
+    <form onsubmit="return submitForm()">
+      <label for="nama">Nama Lengkap</label>
+      <input type="text" id="nama" name="nama" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="nomor-telepon">Nomor Telepon</label>
+      <input type="tel" id="nomor-telepon" name="nomor-telepon" pattern="[0-9]{10,12}" required>
+      <label for="makanan">Pilih Makanan</label>
+      <select id="makanan" name="makanan" required>
+        <option value="">-- Pilih Hidangan--</option>
+        <option value="Sando Buah">Sando Buah</option>
+        <option value="Puyo">Puyo</option>
+        <option value="Salad Buah">Salad Buah</option>
+        <option value="Salad Sayur">Salad Sayur</option>
+        <option value="Makaroni Skotel">Makaroni Skotel</option>
+        <option value="Green Tea">Green Tea</option>
+        <option value="Lemon Tea">Lemon Tea</option>
+        <option value="Overnight OatMeals">Overnight OatMeals</option>
+        <option value="Fruit Oats">Fruit Oats</option>
+      </select>
+      <label for="jumlah">Jumlah Pesanan</label>
+      <input type="number" id="jumlah" name="jumlah" min="1" max="10" required>
+      <p>
+      </p>
+      <input type=  "submit" value="Bayar">
+</form>
+<div id="hasil-pembayaran">
+  <h2>Terima kasih sudah memesan!</h2>
+  <p>Kami akan mengirimkan detail pembayaran ke email Anda.</p>
+  <button onclick="tutupHasilPembayaran()">Tutup</button>
+</div>
+<script>
+  function submitForm() {
+    // Ambil data dari form
+    var nama = document.getElementById("nama").value;
+    var email = document.getElementById("email").value;
+    var nomorTelepon = document.getElementById("nomor-telepon").value;
+    var makanan = document.getElementById("makanan").value;
+    var jumlah = document.getElementById("jumlah").value;
+    // Hitung total pembayaran
+    var hargaMakanan = 0;
+    switch (makanan) {
+      case "Sando Buah":
+        hargaMakanan = 7000;
+        break;
+      case "Puyo":
+        hargaMakanan = 5000;
+        break;
+      case "Salad Buah":
+        hargaMakanan = 12000;
+        break;
+      case "Salad Sayur":
+        hargaMakanan = 14000;
+        break;
+      case "Makaroni Skotel":
+        hargaMakanan = 15000;
+        break;
+      case "Green Tea":
+        hargaMakanan = 10000;
+        break;
+      case "Lemon Tea":
+        hargaMakanan = 10000;
+        break;
+      case "Overnight OatMeals":
+        hargaMakanan = 18000;
+        break;
+      case "Fruit Oats":
+        hargaMakanan = 12000;
+        break;
+    }
+    var total = hargaMakanan * jumlah;
+    // Tampilkan hasil pembayaran
+    document.getElementById("hasil-pembayaran").style.display = "block";
+    document.getElementById("hasil-pembayaran").innerHTML = `
+      <h2>Detail Pembayaran</h2>
+      <p>Nama: ${nama}</p>
+      <p>Email: ${email}</p>
+      <p>Nomor Telepon: ${nomorTelepon}</p>
+      <p>Makanan: ${makanan}</p>
+      <p>Jumlah Pesanan: ${jumlah}</p>
+      <p>Total Pembayaran: Rp${total}</p>
+    `;
+    // Reset form
+    document.getElementById("nama").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("nomor-telepon").value = "";
+    document.getElementById("makanan").value = "";
+    document.getElementById("jumlah").value = "";
+    return false;
+  }
+  function tutupHasilPembayaran() {
+    document.getElementById("hasil-pembayaran").style.display = "none";
+  }
+</script>
+</body>
+</html>
